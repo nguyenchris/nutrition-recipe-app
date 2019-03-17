@@ -47,30 +47,72 @@
         <!-- Shopping Cart -->
         <div class='row'>
             <div class='col' id='shoppingListDiv'>
-                <h4>Shopping List</h4>
-                <!-- Table Head -->
-                <div class='divider'></div>
-                    <table class='striped' id='shoppingListTable'>
-                        <thead>
-                            <th>Ingredient</th>
-                            <th> </th>
-                        </thead>
-                        <!-- Table Body -->
-                        <tr>
-                            <td>Sugar</td>
-                            <td>
-                                <label><input type="checkbox" class="filled-in" />
-                                    <span></span></label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Flour</td>
-                            <td>
-                                <label><input type="checkbox" class="filled-in" />
-                                <span></span></label>
-                            </td>
-                        </tr>
-                    </table>
+                <div id="recipe_modal" class="modal">
+                    <div class="modal-header">
+                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">
+                            <i class="material-icons" id="modal_close">close</i>
+                        </a>
+                        <a href="#" onclick="return false;">
+                            <i class="material-icons" id="starIcon">star_border</i>
+                        </a>
+                    </div>
+
+
+
+
+                    <!-- Not sure if you wanted the layout to be like this for the modal -->
+                    <!-- Feel free to change it or style it -->
+                    <div class="modal-content">
+
+                        <!-- Area for Recipe Content in one row-->
+                        <div class="recipe_content">
+                            <div class="row">
+
+                                <!-- Recipe Details Column -->
+                                <h4 id="recipe_title"></h4>
+                                <div class="col s4">
+                                    <div id="recipe_image">
+                                    </div>
+                                    <h5>Cook Time: <span id="cook_time"></span></h5>
+                                    <h5>Servings: <span id="num_servings"></span></h5>
+                                    <a class="waves-effect waves-light btn" id="directions_btn" target="_blank"><i
+                                            class="material-icons right">kitchen</i>Directions</a>
+                                    <div class="recipe_attribution">
+                                    </div>
+                                </div>
+
+                                <!-- Unordered List of Ingredients Column -->
+                                <div class="col s3 offset-s1">
+                                    <h5>Ingredients</h5>
+                                    <ul id="ing_list">
+                                    </ul>
+                                </div>
+
+                                <!-- Nutrition Label Column -->
+                                <div class="col s3" id="recipe_nutr_label">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- This 2nd row will be dedicated to the table of ingredient details -->
+                        <!-- Upon clicking each ingredient, the nutrition label will render for it -->
+                        <!-- Recipe Ingredient Details -->
+                        <div class="row" id="ing_details_row">
+                            <div class="col offset-s5" id="ing_table">
+                                <table class="highlight">
+                                    <thead>
+                                        <tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ing_details">
+                                        <tr>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -87,7 +129,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.4.1/jquery.jscroll.min.js"></script>
     <!-- JavaScript -->
-    <script src="assets/javascript/logic.js"></script>
+    <script src="assets/javascript/fav.js"></script>
 </body>
 
 </html>

@@ -63,6 +63,10 @@ $(document).ready(function () {
     }
 
 
+
+
+
+
     /********************************** Classes / Dynamic Data ******************************/
 
     /***
@@ -487,7 +491,6 @@ $(document).ready(function () {
                 var imgDiv = $('<div class="recipe_card_img recipe_result" data-recipeid="' + el.id + '">');
                 var name = $('<h4 class="recipe_card_name recipe_result" data-recipeid="' + el.id + '">' + limitRecipeTitle(el.recipeName) + '</div>"');
 
-
                 if (el.hasOwnProperty('smallImageUrls')) {
                     img = $('<img>').attr('src', el.smallImageUrls[0]);
                 } else if (el.hasOwnProperty('imageUrlsBySize')) {
@@ -528,8 +531,6 @@ $(document).ready(function () {
 
     // Renders the recipe content, not including ingredient list
     var renderRecipeContent = function (name, img, time, servings, source, attr) {
-        // recipe.name, recipe.images[0].hostedLargeUrl, recipe.totalTime, recipe.numberOfServings, recipe.source.sourceRecipeUrl
-
         var imgElem = $('<img>').attr({
             src: img,
             alt: name
@@ -537,11 +538,11 @@ $(document).ready(function () {
 
         $('#recipe_image').append(imgElem);
         $('#recipe_title').text(name);
-        $('#num_servings').text(servings)
+        $('#num_servings').text(servings);
         $('#cook_time').text(time);
         $('#directions_btn').attr('href', source);
         $('.recipe_attribution').html(attr);
-    }
+    };
 
     // Renders the modal to open, also removes all the different items in HTML after being closed
     var renderRecipeModal = function () {
@@ -553,11 +554,13 @@ $(document).ready(function () {
                 $('#cook_time').empty();
                 $('#num_servings').empty();
                 $('#recipe_attribution').empty();
+                $('#ing_list').empty();
+                $('#ing_details').empty();
             },
             dismissible: true,
         });
         instance.open();
-    }
+    };
 
     // Renders unordered list of ingredients to modal
     var renderIngredientList = function (list) {
@@ -572,7 +575,7 @@ $(document).ready(function () {
 
     var renderIngredientDetails = function (arr) {
         for (i = 0; i < arr.length; i++) {
-            
+
             ingImg = `<td><img src="${arr[i].img}" alt="${arr[i].itemName}"></td>`
             ingQty = `<td>${arr[i].serving_qty}</td>`
             ingUnit = `<td>${arr[i].serving_unit}</td>`
@@ -583,9 +586,7 @@ $(document).ready(function () {
             ingRow = `<tr class="ing_details_row" data-ingdetails="${i}">${ingImg}${ingQty}${ingUnit}${ingName}${ingCal}${ingWeight}</tr>`
             $('#ing_details').append(ingRow);
         }
-
-
-    }
+    };
 
     // Renders nutrition label to modal
     var renderNutrLabel = function (obj) {
@@ -685,13 +686,16 @@ $(document).ready(function () {
         recipeController(id);
     });
 
-
-    $(document).on('click', '.ing_details_row', function() {
+    // Click listener to display an ingredient's nutrition facts
+    $(document).on('click', '.ing_details_row', function () {
         var i = $(this).attr('data-ingdetails');
-        recipeNutrLabel = Object.assign({}, labelTemplate, recipe.allIngNutritionArr[i]);
-        recipeNutrLabel.valueServingUnitQuantity = recipe.allIngNutritionArr[i].serving_qty;
-        recipeNutrLabel.valueServingSizeUnit = recipe.allIngNutritionArr[i].serving_qty;
-        renderNutrLabel(recipeNutrLabel);
+        var recipeNutrLabelIng = Object.assign({}, labelTemplate, recipe.allIngNutritionArr[i]);
+        recipeNutrLabelIng.valueServingUnitQuantity = recipe.allIngNutritionArr[i].serving_qty;
+        recipeNutrLabelIng.valueServingSizeUnit = recipe.allIngNutritionArr[i].serving_qty;
+        recipeNutrLabelIng.originalServingUnitQuantity = 0
+        recipeNutrLabelIng.nutritionValueMultiplier = 1
+        renderNutrLabel(recipeNutrLabelIng);
+
     });
 
     // Search Keypress Listener

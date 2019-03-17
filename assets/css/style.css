@@ -487,3 +487,8 @@ input.nf-unitQuantityBox.nf-modifier-field {
     height: 30px;
     width: 18%;
 }
+
+#ing_table_title {
+    text-align: center;
+    color: grey;
+}
